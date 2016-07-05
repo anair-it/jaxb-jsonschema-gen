@@ -44,7 +44,7 @@ Setup
 
 - The default phase is generate-resources
 - Specify the JAXB source directory
-- Specify target JSON schema directory
+- Specify target JSON schema directory. Defaulted to src/main/resources/json-schema
 - Specify packages/classes to be included or excluded 
 	
 Generate JSON schema files
