@@ -76,6 +76,7 @@ import com.fasterxml.jackson.module.jsonSchema.factories.VisitorContext;
 public class JaxbJsonSchemaGenMojo extends AbstractMojo {
 
 	private static final String TARGET_SRC_DIRECTORY = "src/main/resources/";
+	private static final String FILE_SEPERATOR = System.getProperty("file.separator");
 
 	private static final Logger LOG = Logger.getLogger(JaxbJsonSchemaGenMojo.class);
 	
@@ -126,7 +127,7 @@ public class JaxbJsonSchemaGenMojo extends AbstractMojo {
 		List<String> fullyQualifiedJaxbClassList = new ArrayList<String>();
 		for(String fileName: fileNames){
 			fileName = FilenameUtils.removeExtension(fileName);
-			fileName = StringUtils.replace(fileName, "/", ".");
+			fileName = StringUtils.replace(fileName, FILE_SEPERATOR, ".");
 			fullyQualifiedJaxbClassList.add(fileName);
 		}
 		
@@ -166,7 +167,7 @@ public class JaxbJsonSchemaGenMojo extends AbstractMojo {
 				jsonSchema.setId(clz.getSimpleName());
 				String jsonSchemaString = objMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonSchema);
 				
-				File file = new File(TARGET_SRC_DIRECTORY + jsonschemaDirectory + "/" + clz.getSimpleName()+".json");
+				File file = new File(TARGET_SRC_DIRECTORY + jsonschemaDirectory + FILE_SEPERATOR + clz.getSimpleName()+".json");
 				org.apache.commons.io.FileUtils.writeStringToFile(file, jsonSchemaString, Charset.defaultCharset());
 				LOG.info("Generated: " + file.getName());
 				count++;
