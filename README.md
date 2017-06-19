@@ -8,10 +8,10 @@ This is a maven plugin/mojo to generate JSON schema files from JAXB annotated cl
 
 Software Prerequisites
 ----------------------
-1. JDK 6+
+1. JDK 8
 2. Maven 3+
-3. JAXB 2.1+
-4. Jackson 2.5.4
+3. JAXB 2.2+
+4. Jackson 2.8.8
 
 
 Setup

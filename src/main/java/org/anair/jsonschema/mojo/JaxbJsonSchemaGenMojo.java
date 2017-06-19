@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -24,6 +23,8 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
@@ -78,7 +79,7 @@ public class JaxbJsonSchemaGenMojo extends AbstractMojo {
 	private static final String TARGET_SRC_DIRECTORY = "src/main/resources/";
 	private static final String FILE_SEPERATOR = System.getProperty("file.separator");
 
-	private static final Logger LOG = Logger.getLogger(JaxbJsonSchemaGenMojo.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JaxbJsonSchemaGenMojo.class);
 	
 	@Parameter(property = "jaxbDirectory", required=true)
     private String jaxbDirectory;
@@ -160,9 +161,6 @@ public class JaxbJsonSchemaGenMojo extends AbstractMojo {
 				Class<?> clz = Class.forName(fullyQualifiedJaxbClass, false, getClassLoader());
 				
 				objMapper.acceptJsonFormatVisitor(objMapper.constructType(clz), visitor);
-//				objMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-//				objMapper.setTimeZone(TimeZone.getDefault());
-//				objMapper.disable(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS);
 				JsonSchema jsonSchema = visitor.finalSchema();
 				jsonSchema.setId(clz.getSimpleName());
 				String jsonSchemaString = objMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonSchema);
